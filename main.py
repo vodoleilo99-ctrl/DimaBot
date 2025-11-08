@@ -1,13 +1,17 @@
 import telebot
 from flask import Flask, request
-from config import TELEGRAM_TOKEN
+import os
 from ai import ask_openai
 from memory import remember, get_history
-import os
+
+# Загружаем токен из переменных окружения Render
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 app = Flask(__name__)
 
+# URL Render, нужен для установки webhook
 URL = os.getenv("RENDER_EXTERNAL_URL") or "https://dimabot-r754.onrender.com"
 
 @app.route('/' + TELEGRAM_TOKEN, methods=['POST'])
